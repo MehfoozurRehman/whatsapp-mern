@@ -1,12 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import Pusher from "pusher";
-import Path from "path";
 import multer from "multer";
 import cors from "cors";
 import ChatModal from "./Modal/chatModal.js";
 import RoomModal from "./Modal/roomModal.js";
 import UserModal from "./Modal/userModal.js";
+import imageToBase64 from "image-to-base64";
 
 // app config
 
@@ -116,22 +116,29 @@ app.post("/v1/deleteAllUers", (req, res) => {
 
 // room endpoints
 
-app.post("/v1/createRoom", upload.single("roomImage"), (req, res) => {
-  console.log(req.file.originalname);
-  RoomModal.create(
-    {
-      name: req.body.name,
-      roomImage: req.file.originalname,
-      date: req.body.date,
-    },
-    (err, data) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.status(201).send(data);
-      }
-    }
-  );
+app.post("/v1/createRoom", upload.single("roomImage"), async (req, res) => {
+  await imageToBase64(req.file.path) // Path to the image
+    .then((response) => {
+      RoomModal.create(
+        {
+          name: req.body.name,
+          roomImage: response,
+          date: req.body.date,
+        },
+        (err, data) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.status(201).send(data);
+          }
+        }
+      );
+      console.log(response);
+      // "F0aC90by9maWxlLmpwZw=="
+    })
+    .catch((error) => {
+      console.log(error); // Logs an error if there was one
+    });
 });
 
 app.get("/v1/findAllRooms", (req, res) => {
