@@ -117,11 +117,11 @@ app.post("/v1/deleteAllUers", (req, res) => {
 // room endpoints
 
 app.post("/v1/createRoom", upload.single("roomImage"), (req, res) => {
-  console.log(req.file.path);
+  console.log(req.file.originalname);
   RoomModal.create(
     {
       name: req.body.name,
-      roomImage: req.file.path,
+      roomImage: req.file.originalname,
       date: req.body.date,
     },
     (err, data) => {
