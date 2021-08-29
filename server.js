@@ -1,31 +1,32 @@
 import express from "express";
 import mongoose from "mongoose";
 import Pusher from "pusher";
-import multer from "multer";
+// import multer from "multer";
 import cors from "cors";
 import ChatModal from "./Modal/chatModal.js";
 import RoomModal from "./Modal/roomModal.js";
 import UserModal from "./Modal/userModal.js";
-import imageToBase64 from "image-to-base64";
+// import imageToBase64 from "image-to-base64";
 
 // app config
 
 const app = express();
 const port = process.env.PORT || 9000;
 
-const storage = multer.diskStorage({
-  // destination: (req, file, cb) => {
-  //   cb(null, "./Upload");
-  // },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./Upload");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
 
-const upload = multer({
-  storage: storage,
-  // limits: { fileSize: 10 * 1024 * 1024 },
-});
+// const upload = multer({
+//   storage: storage,
+//   // limits: { fileSize: 10 * 1024 * 1024 },
+// });
+
 // const pusher = new Pusher({
 //   appId: "1253725",
 //   key: "d1208821573922ba3148",
@@ -86,13 +87,6 @@ app.get("/v1/checkIfUsersExist", (req, res) => {
       res.status(200).send(data);
     }
   });
-  // UserModal.find((err, data) => {
-  //   if (err) {
-  //     res.status(500).send(err);
-  //   } else {
-  //     res.status(200).send(data);
-  //   }
-  // });
 });
 
 app.post("/v1/deleteUser", (req, res) => {
@@ -118,30 +112,14 @@ app.post("/v1/deleteAllUers", (req, res) => {
 
 // room endpoints
 
-app.post("/v1/createRoom", upload.single("roomImage"), async (req, res) => {
-  await imageToBase64(req.file.path) // Path to the image
-    .then((response) => {
-      RoomModal.create(
-        {
-          name: req.body.name,
-          roomImage: response,
-          date: req.body.date,
-          lastMessage: req.body.lastMessage,
-        },
-        (err, data) => {
-          if (err) {
-            res.status(500).send(err);
-          } else {
-            res.status(201).send(data);
-          }
-        }
-      );
-      console.log(response);
-      // "F0aC90by9maWxlLmpwZw=="
-    })
-    .catch((error) => {
-      console.log(error); // Logs an error if there was one
-    });
+app.post("/v1/createRoom", (req, res) => {
+  RoomModal.create(req.body, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(data);
+    }
+  });
 });
 
 app.get("/v1/findAllRooms", (req, res) => {
