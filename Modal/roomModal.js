@@ -5,6 +5,7 @@ const instance = mongoose.Schema(
     name: String,
     roomImage: String,
     date: String,
+    lastMessage: String,
   }
   // { timestamps: true }
 );

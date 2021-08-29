@@ -14,8 +14,10 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 const storage = multer.diskStorage({
-  destination: "./Upload",
-  filename: function (req, file, cb) {
+  // destination: (req, file, cb) => {
+  //   cb(null, "./Upload");
+  // },
+  filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
@@ -124,6 +126,7 @@ app.post("/v1/createRoom", upload.single("roomImage"), async (req, res) => {
           name: req.body.name,
           roomImage: response,
           date: req.body.date,
+          lastMessage: req.body.lastMessage,
         },
         (err, data) => {
           if (err) {
