@@ -8,11 +8,12 @@ export default function Auth() {
     e.preventDefault();
     axios("/v1/checkIfUsersExist", {
       email: email,
+      password: password,
     });
   }
   return (
     <>
-      <form className="messanger__sign__form">
+      <form className="messanger__sign__form" onSubmit={handleSubmit}>
         {/* <input type="text" placeholder="User Name" /> */}
 
         <div className="messanger__sign__form__heading">Login to whatsapp</div>
@@ -32,9 +33,7 @@ export default function Auth() {
             setPassword(e.target.value);
           }}
         />
-        <button type="button" onClick={handleSubmit}>
-          Login
-        </button>
+        <button type="submit">Login</button>
       </form>
     </>
   );

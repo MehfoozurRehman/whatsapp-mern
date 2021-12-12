@@ -65,10 +65,10 @@ function App() {
   return (
     <Router>
       <Switch>
-        {/* <Route path="/">
-          <Auth />
-        </Route> */}
         <Route path="/">
+          <Auth />
+        </Route>
+        <Route path="/dashboard">
           {loading ? (
             <Loading />
           ) : (

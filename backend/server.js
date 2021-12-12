@@ -78,9 +78,9 @@ app.get("/v1/findAllUsers", (req, res) => {
     }
   });
 });
-app.get("/v1/checkIfUsersExist", (req, res) => {
+app.post("/v1/checkIfUserExist", (req, res) => {
   const userEmail = req.body.email;
-  UserModal.exists({ email: userEmail }).then((err, data) => {
+  UserModal.findOne({ email: userEmail }, (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
