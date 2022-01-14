@@ -5,8 +5,8 @@ const instance = mongoose.Schema(
     name: String,
     email: String,
     passowrd: String,
-  }
-  // { timestamps: true }
+  },
+  { timestamps: true }
 );
 
 export default mongoose.model("userModal", instance);

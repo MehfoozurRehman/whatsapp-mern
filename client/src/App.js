@@ -50,7 +50,10 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userName, setUserName] = useState("ali");
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    setUserName(localStorage.getItem("user"));
+  }, []);
 
   useEffect(() => {
     axios.get("/v1/findAllRooms").then((res) => {
@@ -61,12 +64,12 @@ function App() {
       setMessages(res.data);
     });
   }, []);
-
+  console.log(userName);
   return (
     <Router>
       <Switch>
-        <Route path="/">
-          <Auth />
+        <Route path="/" exact>
+          <Auth setUserName={setUserName} />
         </Route>
         <Route path="/dashboard">
           {loading ? (

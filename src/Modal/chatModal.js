@@ -6,8 +6,8 @@ const instance = mongoose.Schema(
     timestamp: String,
     user: String,
     room: String,
-  }
-  // { timestamps: true }
+  },
+  { timestamps: true }
 );
 
 export default mongoose.model("chatModal", instance);

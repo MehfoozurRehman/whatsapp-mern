@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import Pusher from "pusher";
+// import Pusher from "pusher";
 // import multer from "multer";
 import cors from "cors";
 import ChatModal from "./Modal/chatModal.js";
@@ -53,7 +53,7 @@ mongoose.connect(connection_url, {
 // api endpoints
 
 app.get("/", (req, res) => {
-  res.send("hello welcome to todo api");
+  res.send("hello welcome to whatsapp api");
 });
 
 // user endpoints

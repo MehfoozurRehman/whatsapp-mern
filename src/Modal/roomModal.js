@@ -6,8 +6,8 @@ const instance = mongoose.Schema(
     roomImage: String,
     date: String,
     lastMessage: String,
-  }
-  // { timestamps: true }
+  },
+  { timestamps: true }
 );
 
 export default mongoose.model("roomModal", instance);
